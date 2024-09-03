@@ -47,7 +47,7 @@ struct TaskListView: View {
         // Adicione mais tarefas conforme necessário
     ]
 
-    var body: some View {
+    var body: some View {	
         List(tasks) { task in
             NavigationLink(destination: TaskDetailView(task: task)) {
                 HStack {
