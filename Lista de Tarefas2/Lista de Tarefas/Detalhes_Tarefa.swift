@@ -3,18 +3,21 @@ import SwiftUI
 // Estrutura para representar uma Tarefa
 struct Task: Identifiable, Codable {
     let id: UUID
-    var title: String // Alterado para var para permitir alterações
+    var title: String
+    var description: String // Adicionado para descrição
     let creationDate: Date
-    var isCompleted: Bool // Alterado para var para permitir alterações
+    var isCompleted: Bool
 
     // Inicializador padrão para decodificação
-    init(id: UUID = UUID(), title: String, creationDate: Date, isCompleted: Bool) {
+    init(id: UUID = UUID(), title: String, description: String = "", creationDate: Date, isCompleted: Bool) {
         self.id = id
         self.title = title
+        self.description = description
         self.creationDate = creationDate
         self.isCompleted = isCompleted
     }
 }
+
 
 // Formatador de Data
 let dateFormatter: DateFormatter = {
@@ -39,9 +42,15 @@ struct TaskDetailView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
 
+                TextField("Descrição da Tarefa", text: $task.description)
+                    .font(.body)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+
                 Button(action: {
                     // Ação para salvar alterações
                     isEditing = false
+                    saveTask()
                 }) {
                     Text("Salvar")
                         .font(.headline)
@@ -59,6 +68,10 @@ struct TaskDetailView: View {
                 Text(task.isCompleted ? "Status: Concluída" : "Status: Não Concluída")
                     .font(.headline)
                     .foregroundColor(task.isCompleted ? .green : .red)
+
+                Text(task.description)
+                    .font(.body)
+                    .padding(.top)
 
                 HStack {
                     Button(action: {
@@ -89,13 +102,13 @@ struct TaskDetailView: View {
         .padding()
         .navigationBarTitle("Detalhes da Tarefa", displayMode: .inline)
     }
-}
 
-#Preview {
-    TaskDetailView(
-        task: .constant(Task(id: UUID(), title: "Tarefa Exemplo", creationDate: Date(), isCompleted: false)),
-        deleteTask: {
-            print("Tarefa deletada")
+    private func saveTask() {
+        // Atualize a tarefa e salve as alterações no JSON
+        do {
+            try JSONService().save([task]) // Aqui é necessário passar a lista de tarefas completa
+        } catch {
+            print("Erro ao salvar tarefas: \(error)")
         }
-    )
+    }
 }
