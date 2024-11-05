@@ -1,2 +1,2 @@
 # Development in Swift
- Curso focado na aprendizagem da linguagem Swift (Apple), para dispositivos iOS.
+ Repositório para as práticas que exerço no curso da linguagem Swift (Apple), para dispositivos iOS.
