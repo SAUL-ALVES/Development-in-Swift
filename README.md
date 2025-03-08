@@ -1,7 +1,10 @@
 # Development in Swift
  Repositório para as práticas que exerço no curso da linguagem Swift (Apple), para dispositivos iOS.
 
- #Sobre o projeto de temporizador
+
+
+
+#Sobre o projeto de temporizador
 
 
  ## **Temporizador de Memes com SwiftUI**
